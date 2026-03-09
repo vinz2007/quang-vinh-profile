@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quang vinh profile - Transparent Galaxy</title>
+
+    <style>
+        /* 1. CẤU HÌNH CƠ BẢN */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 2. NỀN GALAXY (BACKGROUND) */
+        .galaxy-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #1b0524 0%, #2e0239 50%, #000000 100%);
+            z-index: -1;
+            overflow: hidden; /* Quan trọng để sao chổi không bị tràn ra ngoài */
+        }
+
+        /* 3. HIỆU ỨNG NGÔI SAO (TWINKLE) */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.2; transform: scale(0.8); }
+        }
+
+        /* 4. HIỆU ỨNG SAO CHỔI (SHOOTING STAR) */
+        .shooting-star {
+            position: absolute;
+            top: 50%;
+            left: 100%; /* Bắt đầu từ ngoài màn hình bên phải */
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+            transform: rotate(-45deg); /* Xoay 45 độ */
+            opacity: 0;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: shoot 3s linear forwards;
+        }
+
+        @keyframes shoot {
+            0% {
+                left: 100%;
+                top: 20%;
+                opacity: 1;
+            }
+            100% {
+                left: -100px;
+                top: 80%;
+                opacity: 0;
+            }
+        }
+
+        /* 5. KHUNG CV CHÍNH */
+        .cv-container {
+            position: relative;
+            z-index: 10;
+            width: 900px;
+            max-width: 95%;
+            margin: 50px auto;
+            /* Nền chính của khung CV (cũng nên trong suốt nhẹ) */
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(20px); /* Làm mờ tổng thể khung */
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        /* 6. CỘT TRÁI (NỀN TÍM MỜ - HIỆU ỨNG KÍNH TỐI) */
+        .left-column {
+            width: 35%;
+            /* Thay đổi: Giảm độ đậm xuống 0.15 để lộ nền sao, tăng blur */
+            background: rgba(10, 5, 20, 0.15); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Avatar */
+        .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.3);
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    
+    /* --- PHẦN HIỆU ỨNG MỚI --- */
+    
+    /* 1. Thay đổi nền thành Gradient màu sắc */
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+    background-size: 200% 200%;
+    
+    /* 2. Áp dụng animation cho cả nền và bóng đổ */
+    animation: gradientMove 3s ease infinite, pulseGlow 2s ease-in-out infinite alternate;
+}
+
+/* --- KEYFRAMES (Định nghĩa chuyển động) --- */
+
+/* Hiệu ứng nền màu sắc di chuyển */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Hiệu ứng bóng đổ nhấp nháy (Glow) */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2), 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    100% {
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
+    }
+}
+
+        /* Các tiêu đề cột trái */
+        .left-section-title {
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #e0aaff;
+        }
+
+        .contact-info p, .edu-info p, .lang-info p {
+            font-size: 14px;
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+
+        /* Thanh kỹ năng */
+        .skill-bar {
+            background: rgba(255,255,255,0.15);
+            border-radius: 5px;
+            height: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .skill {
+            background: #d400ff;
+            height: 100%;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #d400ff;
+        }
+
+        /* 7. CỘT PHẢI (NỀN TRẮNG MỜ - HIỆU ỨNG KÍNH SÁNG) */
+        .right-column {
+            width: 65%;
+            /* Thay đổi: Giảm độ đậm xuống 0.1 để nền sao xuyên qua rõ hơn */
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: #333;
+            padding: 40px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Tên và chức danh */
+        .name {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            background-size: 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowMove 5s linear infinite;
+        }
+
+        @keyframes rainbowMove {
+            0% { background-position: 0% }
+            100% { background-position: 400% }
+        }
+
+        .job-title {
+            font-size: 18px;
+            color: #16a2d1;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* Các tiêu đề cột phải */
+        .right-section-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #410245;
+            border-bottom: 2px solid rgba(212, 0, 255, 0.3);
+            padding-bottom: 5px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .right-section-title:first-child {
+            margin-top: 0;
+        }
+         /* chữ cột phải */
+        .content-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #ffffff;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* 8. RESPONSIVE */
+        @media (max-width: 768px) {
+            .cv-container {
+                flex-direction: column;
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .left-column, .right-column {
+                width: 100%;
+                padding: 20px;
+            }
+
+            .left-column {
+                text-align: center;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .avatar {
+                margin: 0 auto 20px auto;
+            }
+
+            .name {
+                font-size: 28px;
+            }
+        }
+         /* 9. CHÂN TRANG (FOOTER) & NÚT MẠNG XÃ HỘI */
+        .footer {
+            position: fixed;
+    bottom: 20px;   /* cách mép dưới */
+    left: 20px;     /* cách mép trái */
+    z-index: 100;
+
+    display: flex;
+    flex-direction: column; /* xếp dọc */
+    gap: 12px;              /* khoảng cách giữa nút */
+
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 20px;
+            padding: 0;              /* bỏ khoảng trống */
+            background: transparent; /* bỏ nền */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: none;            /* bỏ viền */
+            border: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px; /* Hình vuông bo tròn nhẹ */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+            transition: fill 0.3s ease;
+        }
+        .social-btn.discord:hover svg {
+            fill: #5865F2;
+        }
+
+        /* Hiệu ứng hover cho từng nút */
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        .social-btn.discord:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: rgba(88, 101, 242, 0.3);
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+        }
+
+        /* Màu sắc riêng cho từng nút khi hover */
+        .social-btn.facebook:hover svg { fill: #1877F2; }
+        .social-btn.tiktok:hover svg { fill: #000000; }
+        .social-btn.zalo:hover svg { fill: #0068FF; }
+
+        /* Tooltip tên mạng xã hội */
+        .social-btn::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .social-btn:hover::after {
+            opacity: 1;
+        }
+        .social-btn.discord::after {
+            content: attr(data-title);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(88, 101, 242, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .social-btn.discord:hover::after {
+            opacity: 1;
+        }
+        /* 10. chân trang real*/
+        .footerr{
+    background: linear-gradient(90deg,#1c0828,#2a0d3a,#3b114f);
+    border-top:2px solid rgba(255,255,255,0.3);
+    padding:20px;
+}
+
+.footerr-container{
+    text-align:center;   /* căn giữa chữ */
+    color:#c8b6ff;
+    font-size:14px;
+}
+    </style>
+</head>
+
+<body>
+    <div class="galaxy-container" id="galaxy"></div>
+    
+    <script>
+        const galaxy = document.getElementById('galaxy');
+        const starCount = 150; 
+
+        // 1. Tạo các ngôi sao nhấp nháy (Static Stars)
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            const size = Math.random() * 2; 
+            const duration = Math.random() * 3 + 2; 
+
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${duration}s`);
+
+            galaxy.appendChild(star);
+        }
+
+        // 2. Tạo hiệu ứng Sao Chổi (Shooting Stars)
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.classList.add('shooting-star');
+
+            // Random vị trí bắt đầu (cao/thấp)
+            star.style.top = Math.random() * 50 + '%';
+            
+            // Random tốc độ bay (giữa 2s và 4s)
+            const duration = Math.random() * 2 + 2;
+            star.style.animationDuration = duration + 's';
+
+            galaxy.appendChild(star);
+
+            // Xóa sao chổi sau khi bay xong để tránh nặng máy
+            setTimeout(() => {
+                star.remove();
+            }, duration * 1000);
+        }
+
+        // Tạo một sao chổi mỗi 3 giây
+        setInterval(createShootingStar, 3000);
+    </script>
+
+    <div class="cv-container">
+        <!-- CỘT TRÁI -->
+        <div class="left-column">
+            <img src="mangden.jpg" class="avatar" alt="Avatar"> /* căn giữa chữ */
+
+            <div class="left-section-title">Thông tin</div>
+            <div class="contact-info">
+                <p>📆 14/05/2007</p>
+                <p>📞 0866977508</p>
+                <p>📧 dqvinh25@pdu.edu.vn</p>
+                <p>📍 Quảng Ngãi</p>
+            </div>
+
+            <div class="left-section-title">Học vấn</div>
+            <div class="edu-info">
+                <p><strong>Đại học...</strong></p>
+                <p>Chuyên ngành Sư Phạm Tin Học</p>
+                <p>2025 - 2029</p>
+            </div>
+
+            <div class="left-section-title">Kỹ năng</div>
+            
+            <p>Python</p>
+            <div class="skill-bar">
+                <div class="skill" style="width:40%"></div>
+            </div>
+
+            <p>HTML/CSS</p>
+            <div class="skill-bar">
+                <div class="skill" style="width:45%"></div>
+            </div>
+
+            <p>Minecraft Server</p>
+            <div class="skill-bar">
+                <div class="skill" style="width:90%"></div>
+            </div>
+
+            <div class="left-section-title">Ngoại ngữ</div>
+            <div class="lang-info">
+                <p>🇬🇧 Tiếng Anh (Cơ bản)</p>
+                <p>🇨🇳 Tiếng Trung (Chưa học)</p>
+            </div>
+        </div>
+
+        <!-- CỘT PHẢI -->
+        <div class="right-column">
+            <div class="name">Quang Vinh</div>
+            <div class="job-title">Sinh viên Sư Phạm Tin Học</div>
+
+            <div class="right-section-title">Mục tiêu nghề nghiệp</div>
+            <div class="content-text">
+                Trở thành lập trình viên và phát triển server chuyên nghiệp. Mong muốn được làm việc trong môi trường sáng tạo, học hỏi công nghệ mới và đóng góp vào các dự án phần mềm chất lượng cao.
+            </div>
+
+            <div class="right-section-title">Kinh nghiệm</div>
+            <div class="content-text">
+                <ul>
+                    <li><strong>Owner Minecraft Server:</strong> Quản lý vận hành, cấu hình plugin, xử lý sự cố server.</li>
+                    <li><strong>Lập trình Python:</strong> Viết các script tự động hóa cơ bản, xử lý dữ liệu.</li>
+                    <li><strong>Thiết kế Web:</strong> Xây dựng giao diện web tĩnh bằng HTML/CSS.</li>
+                </ul>
+            </div>
+            
+            <div class="right-section-title">Sở thích</div>
+            <div class="content-text">
+                <ul>
+                    <li>Chơi game, nghiên cứu công nghệ.</li>
+                    <li>Đọc sách về tư duy và kỹ năng mềm.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        <!-- 9. CHÂN TRANG (FOOTER) & NÚT MẠNG XÃ HỘI -->
+    <div class="footer">
+        <!-- Nút Facebook -->
+        <a href="https://www.facebook.com/qangvnh" target="_blank" class="social-btn facebook" data-title="Facebook">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+        </a>
+
+        <!-- Nút TikTok -->
+        <a href="https://www.tiktok.com/@_slayermc07" target="_blank" class="social-btn tiktok" data-title="TikTok">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.16c0 2.52-1.12 4.84-2.9 6.24-1.75 1.38-4.03 1.93-6.21 1.47-2.18-.46-4.08-1.92-5.09-3.94-1.01-2.02-1.01-4.42 0-6.44 1.01-2.02 2.91-3.48 5.09-3.94 1.09-.23 2.22-.23 3.31 0v4.03c-.71-.15-1.44-.15-2.15 0-1.09.23-2.04.92-2.54 1.92-.5 1-.5 2.18 0 3.18.5 1 1.45 1.69 2.54 1.92 1.09.23 2.22.23 3.31 0 1.09-.23 2.04-.92 2.54-1.92.5-1 .5-2.18 0-3.18V.02z"/>
+            </svg>
+        </a>
+
+         <!-- Nút Discord -->
+        <a href="https://discord.gg/u6Nd6hNWhn" target="_blank" class="social-btn discord" data-title="Discord">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+            </svg>
+        </a>
+    </div>
+    <footer class="footerr">
+    <div class="footerr-container">
+        Quang Vinh • © 2026 • Sư phạm Tin học • Trường Đại Học Phạm Văn Đồng • Quảng Ngãi • MY Curriculum Vitae(cv)
+    </div>
+    </footer>
+
+</body>
+</html>
